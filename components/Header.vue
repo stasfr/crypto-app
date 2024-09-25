@@ -22,7 +22,7 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const items = ref([
   {
     label: "Home",
