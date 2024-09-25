@@ -17,12 +17,21 @@ importers:
       '@primevue/nuxt-module':
         specifier: ^4.0.7
         version: 4.0.7(@babel/parser@7.25.6)(magicast@0.3.5)(rollup@4.22.4)(vue@3.5.8)
+      '@primevue/themes':
+        specifier: ^4.0.7
+        version: 4.0.7
       nuxt:
         specifier: ^3.13.0
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.7.0)(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.22.4)(terser@5.33.0)(vite@5.4.8(@types/node@22.7.0)(terser@5.33.0))
       pinia:
         specifier: ^2.2.2
         version: 2.2.2(vue@3.5.8)
+      primeicons:
+        specifier: ^7.0.0
+        version: 7.0.0
+      primevue:
+        specifier: ^4.0.7
+        version: 4.0.7(vue@3.5.8)
       vue:
         specifier: latest
         version: 3.5.8
@@ -863,6 +872,10 @@ packages:
 
   '@primevue/nuxt-module@4.0.7':
     resolution: {integrity: sha512-RDV9irkfYHWD3Cv5fTrDFBHzN128LW4HgxhrhgsnUsd/hYPJOk7qNjsaMZHlOg33TD1pd+FGyYdrIkXNTNnyRg==}
+    engines: {node: '>=12.11.0'}
+
+  '@primevue/themes@4.0.7':
+    resolution: {integrity: sha512-ZbDUrpBmtuqdeegNwUaJTubaLDBBJWOc4Z6UoQM3DG2c7EAE19wQbuh+cG9zqA7sT/Xsp+ACC/Z9e4FnfqB55g==}
     engines: {node: '>=12.11.0'}
 
   '@rollup/plugin-alias@5.1.1':
@@ -2854,6 +2867,9 @@ packages:
     resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
     engines: {node: ^14.13.1 || >=16.0.0}
 
+  primeicons@7.0.0:
+    resolution: {integrity: sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==}
+
   primevue@4.0.7:
     resolution: {integrity: sha512-88qazHqldkqsCxvhjnjO65XMBfJyHQoFW3BQvrJYO6RqPheHB4f7cY61eqtBpJAjnM5x+YKTZiWx/gBuUzqT7Q==}
     engines: {node: '>=12.11.0'}
@@ -4495,6 +4511,10 @@ snapshots:
       - supports-color
       - vue
       - webpack-sources
+
+  '@primevue/themes@4.0.7':
+    dependencies:
+      '@primeuix/styled': 0.0.5
 
   '@rollup/plugin-alias@5.1.1(rollup@4.22.4)':
     optionalDependencies:
@@ -6708,6 +6728,8 @@ snapshots:
       source-map-js: 1.2.1
 
   pretty-bytes@6.1.1: {}
+
+  primeicons@7.0.0: {}
 
   primevue@4.0.7(vue@3.5.8):
     dependencies:
