@@ -1,6 +1,6 @@
 <template>
   <CurrencyChartForm />
-  <!-- <CurrencyChartItem /> -->
+  <CurrencyChartItem />
 </template>
 
 <script setup lang="ts"></script>

@@ -19,3 +19,14 @@ export interface RequestParams {
   startTime: number | undefined;
   endTime: number | undefined;
 }
+
+export interface RequestFormParams {
+  symbol: string | undefined;
+  interval: string | undefined;
+  dateRange: Date[] | undefined;
+}
+
+export interface ChartConfig {
+  labels: string[];
+  prices: number[];
+}

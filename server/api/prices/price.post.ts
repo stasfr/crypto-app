@@ -3,13 +3,19 @@ export default defineEventHandler(async (event) => {
 
   const apiUrl: string = "https://api.binance.com/api/v3/klines";
 
-  const response = await fetch(`${apiUrl}?${new URLSearchParams(params)}`)
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
+  let response;
 
-  return {
-    response,
-  };
+  try {
+    response = await fetch(`${apiUrl}?${new URLSearchParams(params)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(`${apiUrl}?${new URLSearchParams(params)}`);
+
+        return data;
+      });
+  } catch (error) {
+    console.error(`Error fetching data from ${apiUrl}:`, error);
+    throw error;
+  }
+  return { response };
 });

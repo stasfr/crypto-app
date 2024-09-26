@@ -8,33 +8,34 @@
 </template>
 
 <script setup lang="ts">
-import {
-  response,
-  parseSingleKline,
-  parseKlinesToObjects,
-  extractDateLabels,
-  extractPrices,
-} from "@/examples/usdMonth.ts";
-import type { KlineObject } from "@/examples/usdMonth.ts";
+import { useKlinesStore } from "~/store/klines";
 
-onMounted(() => {
-  klinesData.value = parseKlinesToObjects(response);
+const klinesStore = useKlinesStore();
+
+onMounted(async () => {
+  await klinesStore.fetchCurrency();
 
   chartData.value = setChartData();
   chartOptions.value = setChartOptions();
 });
 
+watch(
+  () => klinesStore.chartConfig,
+  () => {
+    chartData.value = setChartData();
+    chartOptions.value = setChartOptions();
+  },
+  { deep: true }
+);
+
 const chartData = ref();
 const chartOptions = ref();
-
-const klinesData = ref();
-const showType = ref("month");
 
 const setChartData = () => {
   const documentStyle = getComputedStyle(document.documentElement);
 
-  const labels = extractDateLabels(response, showType.value);
-  const prices = extractPrices(response);
+  const labels = klinesStore.chartConfig.labels;
+  const prices = klinesStore.chartConfig.prices;
 
   return {
     labels: labels,
@@ -49,6 +50,7 @@ const setChartData = () => {
     ],
   };
 };
+
 const setChartOptions = () => {
   const documentStyle = getComputedStyle(document.documentElement);
   const textColor = documentStyle.getPropertyValue("--p-text-color");
