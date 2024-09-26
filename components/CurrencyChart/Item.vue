@@ -5,7 +5,6 @@
     :options="chartOptions"
     class="h-[30rem]"
   />
-  {{ parseKlinesToObjects(response) }}
 </template>
 
 <script setup lang="ts">
@@ -41,10 +40,10 @@ const setChartData = () => {
     labels: labels,
     datasets: [
       {
-        label: "BTCUSDT",
+        label: "USDT",
         data: prices,
         fill: true,
-        borderColor: documentStyle.getPropertyValue("--p-cyan-500"),
+        borderColor: documentStyle.getPropertyValue("--p-yellow-500"),
         tension: 0.4,
       },
     ],
