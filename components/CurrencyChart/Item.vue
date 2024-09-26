@@ -44,7 +44,7 @@ const setChartData = () => {
         label: "USDT",
         data: prices,
         fill: true,
-        borderColor: documentStyle.getPropertyValue("--p-yellow-500"),
+        borderColor: documentStyle.getPropertyValue("--p-primary-500"),
         tension: 0.4,
       },
     ],
