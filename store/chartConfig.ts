@@ -1,20 +1,29 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import type { ChartConfig, IChartConfig } from "~/types/chartConfig";
+import type { RequestParams } from "~/types/klines.ts";
 
 export const useChartConfigStore = defineStore("chartConfig", () => {
-  const chartConfig = ref<ChartConfig>();
+  const chartConfig = ref();
 
-  function setChartConfig(config: IChartConfig) {
-    const newConfig: ChartConfig = {
-      startDate: Math.floor(config.dateRange[0].getTime() / 1000),
-      endDate: Math.floor(config.dateRange[1].getTime() / 1000),
-      currency: config.currency,
-      interval: config.interval,
-    };
+  // function setChartConfig(config: IChartConfig) {
+  //   const newConfig: RequestParams = {
+  //     startDate: Math.floor(config.dateRange[0].getTime() / 1000),
+  //     endDate: Math.floor(config.dateRange[1].getTime() / 1000),
+  //     currency: config.currency,
+  //     interval: config.interval,
+  //   };
 
-    chartConfig.value = newConfig;
+  //   chartConfig.value = newConfig;
+  // }
+
+  async function fetchCurrency(params: RequestParams) {
+    const data = await $fetch("/api/prices/price", {
+      method: "POST",
+      body: params,
+    });
+
+    chartConfig.value = data;
   }
 
-  return { chartConfig };
+  return { chartConfig, fetchCurrency };
 });
