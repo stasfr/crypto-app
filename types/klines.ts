@@ -1,4 +1,6 @@
 export interface KlineObject {
+  id: number;
+  symbol: string;
   openTime: Date;
   open: number;
   high: number;
@@ -6,16 +8,10 @@ export interface KlineObject {
   close: number;
   volume: number;
   closeTime: Date;
-  quoteAssetVolume: number;
-  numberOfTrades: number;
-  takerBuyBaseAssetVolume: number;
-  takerBuyQuoteAssetVolume: number;
-  ignore: string;
+  interval: string;
 }
 
 export interface RequestParams {
-  symbol: string | undefined;
-  interval: string | undefined;
   startTime: number | undefined;
   endTime: number | undefined;
 }
