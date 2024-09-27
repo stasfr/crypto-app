@@ -16,7 +16,6 @@ export const useKlinesStore = defineStore("klinesStore", () => {
     labels: [],
     prices: [],
   });
-  const url = ref<string>("http://localhost:5000/api/binance/data");
 
   function setRequestParams(
     interval: string | null,
@@ -54,10 +53,13 @@ export const useKlinesStore = defineStore("klinesStore", () => {
   }
 
   async function fetchCurrency() {
-    const response: KlineObject[] = await $fetch(url.value, {
-      method: "GET",
-      query: requestParams.value,
-    });
+    const response: KlineObject[] = await $fetch(
+      "http://localhost:5000/api/binance/data",
+      {
+        method: "GET",
+        query: requestParams.value,
+      }
+    );
 
     console.log(response);
 
