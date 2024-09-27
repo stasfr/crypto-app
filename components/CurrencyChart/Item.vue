@@ -13,8 +13,6 @@ import { useKlinesStore } from "~/store/klines";
 const klinesStore = useKlinesStore();
 
 onMounted(async () => {
-  await klinesStore.fetchCurrency();
-
   chartData.value = setChartData();
   chartOptions.value = setChartOptions();
 });

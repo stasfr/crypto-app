@@ -3,27 +3,63 @@ import { ref } from "vue";
 import type {
   KlineObject,
   RequestParams,
-  RequestFormParams,
   ChartConfig,
 } from "~/types/klines.ts";
 
 export const useKlinesStore = defineStore("klinesStore", () => {
-  const klines = ref();
-  const requestParams = ref<RequestParams>();
+  const klines = ref<KlineObject[]>();
+  const requestParams = ref<RequestParams>({
+    symbol: undefined,
+    interval: undefined,
+    startTime: undefined,
+    endTime: undefined,
+  });
   const chartConfig = ref<ChartConfig>({
     labels: [],
     prices: [],
   });
 
-  function setRequestParams(params: RequestFormParams) {
-    const newParams = {
-      symbol: `BTC${params.symbol}`,
-      interval: params.interval,
-      startTime: params.dateRange?.[0]?.getTime(),
-      endTime: params.dateRange?.[1]?.getTime(),
-    };
-    localStorage.setItem("requestParams", JSON.stringify(newParams));
-    requestParams.value = newParams;
+  function setRequestParams(
+    interval: string | null,
+    dateRange: (Date | null)[] = []
+  ) {
+    const today = Date.now();
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    requestParams.value.symbol = "BTCUSDT";
+    requestParams.value.endTime = today;
+
+    switch (interval) {
+      case "Day":
+        requestParams.value.interval = "1h";
+        requestParams.value.startTime = today - oneDay;
+        break;
+      case "Week":
+        requestParams.value.interval = "1d";
+        requestParams.value.startTime = today - 7 * oneDay;
+        break;
+      case "Month":
+        requestParams.value.interval = "1d";
+        requestParams.value.startTime = today - 30 * oneDay;
+        break;
+      case "3 Months":
+        requestParams.value.interval = "1d";
+        requestParams.value.startTime = today - 90 * oneDay;
+        break;
+      case "Year":
+        requestParams.value.interval = "1M";
+        requestParams.value.startTime = today - 365 * oneDay;
+        break;
+      default:
+        const [start, end] = dateRange?.map((date) => date?.getTime() || 0);
+        const delta = (end - start) / 1000 / 60 / 60 / 24;
+        requestParams.value.interval = delta <= 30 ? "1d" : "1M";
+        requestParams.value.startTime = start;
+        requestParams.value.endTime = end;
+        break;
+    }
+
+    localStorage.setItem("requestParams", JSON.stringify(requestParams.value));
   }
 
   async function fetchCurrency() {
@@ -36,9 +72,7 @@ export const useKlinesStore = defineStore("klinesStore", () => {
     );
 
     klines.value = parseKlinesToObjects(response);
-
-    chartConfig.value.labels = extractDateLabels(response, "dayNumber");
-
+    chartConfig.value.labels = extractDateLabels(response);
     chartConfig.value.prices = extractPrices(response);
   }
 
@@ -65,26 +99,19 @@ export const useKlinesStore = defineStore("klinesStore", () => {
     return klinesArray.map(parseSingleKline);
   }
 
-  function extractDateLabels(
-    klinesArray: (number | string)[][],
-    type: "day" | "month" | "year" | "dayNumber"
-  ): string[] {
+  function extractDateLabels(klinesArray: (number | string)[][]): string[] {
     return klinesArray.map((kline) => {
       const closeTime = new Date(kline[0] as number);
 
-      switch (type) {
-        case "day":
-          return closeTime.toLocaleDateString("ru-RU", { weekday: "long" });
-        case "month":
+      switch (requestParams.value?.interval) {
+        case "1M":
           return closeTime.toLocaleDateString("ru-RU", { month: "long" });
-        case "year":
-          return closeTime.getFullYear().toString();
-        case "dayNumber":
+        case "1d":
           return closeTime.getDate().toString();
+        case "1h":
+          return closeTime.getHours().toString();
         default:
-          throw new Error(
-            'Invalid type. Use "day", "month", "year", or "dayNumber".'
-          );
+          throw new Error("Invalid type");
       }
     });
   }
