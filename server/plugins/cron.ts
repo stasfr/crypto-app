@@ -1,6 +1,4 @@
 import cron from "node-cron";
-// import type { RequestParams } from "~/types/klines.ts";
-// import { serverSupabaseClient } from "#supabase/server";
 
 export default defineNitroPlugin((nitroApp) => {
   // Каждый час

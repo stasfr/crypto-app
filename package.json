@@ -10,7 +10,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxtjs/supabase": "^1.4.0",
     "@pinia/nuxt": "^0.5.4",
     "@primevue/nuxt-module": "^4.0.7",
     "@primevue/themes": "^4.0.7",
