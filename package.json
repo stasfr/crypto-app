@@ -15,6 +15,7 @@
     "@primevue/nuxt-module": "^4.0.7",
     "@primevue/themes": "^4.0.7",
     "chart.js": "^4.4.4",
+    "node-cron": "^3.0.3",
     "nuxt": "^3.13.0",
     "pinia": "^2.2.2",
     "primeicons": "^7.0.0",
@@ -24,6 +25,7 @@
     "whatwg-url": "^14.0.0"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.1"
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@types/node-cron": "^3.0.11"
   }
 }
